@@ -2,7 +2,7 @@
 
 A Ruby clone of the awesome Webdis server, allowing HTTP access to a Redis server.
 
-Currently this is just a proof of concept supporting only GET and SET commands.  I intend to make the API resemble the Webdis API as much as possible so the two are interchangeable.
+Currently this is just a proof of concept supporting only GET and SET commands but I will be expanding it as much as possible.  See the issues for feature requests.
 
 ## Installation
 
