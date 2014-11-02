@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
 require 'rackdis'
+require 'rack'
 
-run Rackdis::API
+Rack::Server.new(app: Rackdis::API.new, Port: 7380).start
