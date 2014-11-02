@@ -6,7 +6,7 @@ module Rackdis
 
     helpers do
       def redis
-        @redis ||= Redis.new
+        @redis ||= RedisFacade.new(Redis.new)
       end
       
       def format_response
@@ -15,24 +15,11 @@ module Rackdis
     end
 
     get 'get/:key' do
-      value = redis.get params[:key]
-      
-      {
-        success: true,
-        command: :GET,
-        key: params[:key],
-        value: value
-      }
+      redis.get params[:key]
     end
     
     get 'set/:key/:value' do
       redis.set params[:key], params[:value]
-    
-      {
-        success: true,
-        command: :SET,
-        key: params[:key]
-      }
     end
     
   end
