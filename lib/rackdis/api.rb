@@ -20,7 +20,7 @@ module Rackdis
       {
         success: true,
         command: :GET,
-        key: params[:key]
+        key: params[:key],
         value: value
       }
     end
