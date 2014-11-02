@@ -28,7 +28,7 @@ Then access it by navigating to the endpoint and it will dump out some `json` li
 
 
 ```json
-// http://localhost:7380/v1/set/hello/world
+# http://localhost:7380/v1/set/hello/world
 {
   "success":true,
   "command":"SET",
@@ -37,7 +37,7 @@ Then access it by navigating to the endpoint and it will dump out some `json` li
 ```
 
 ```json
-// http://localhost:7380/v1/get/hello
+# http://localhost:7380/v1/get/hello
 
 {
   "success":true,
