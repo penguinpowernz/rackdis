@@ -22,6 +22,9 @@ module Rackdis
       redis.call :set, params[:key], params[:value]
     end
     
+    get '/mget/*keys' do
+      redis.mget params[:keys].split("/")
+    end
     
     # Lists
     

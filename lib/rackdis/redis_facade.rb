@@ -8,7 +8,23 @@ module Rackdis
       respond command.to_s.upcase!, args[0], @redis.send(command, *args)
     end
 
+    def mget(keys)
+      values = @redis.mget(keys)
+      
+      pairs = {}
+      values.each_with_index do |value, i|
+        pairs[keys[i]] = value
+      end
+      
+      {
+        success: true,
+        command: :MGET,
+        keys: keys,
+        value: values,
+        pairs: pairs
+      }
     end
+    
     end
 
     private
