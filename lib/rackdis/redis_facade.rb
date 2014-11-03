@@ -25,6 +25,12 @@ module Rackdis
       }
     end
     
+
+    # Pub/Sub
+    
+    def publish(channel, message)
+      @redis.publish(channel, message)
+      { success: true, command: :PUBLISH, channel: channel }
     end
 
     private

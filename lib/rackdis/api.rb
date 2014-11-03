@@ -85,6 +85,12 @@ module Rackdis
       redis.call(:sdiffstore, params[:dst], params[:keys].split("/"))
     end
     
+    # Pub/Sub
+    
+    get 'publish/:channel/:message' do
+      redis.publish(params[:channel], params[:message])
+    end
+    
   end
 end
     
