@@ -8,10 +8,6 @@ module Rackdis
       def redis
         @redis ||= RedisFacade.new(Redis.new)
       end
-      
-      def format_response
-      
-      end
     end
 
     get 'get/:key' do
