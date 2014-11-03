@@ -1,5 +1,7 @@
 module Rackdis
   class RedisFacade
+    attr_reader :redis
+    
     def initialize(redis)
       @redis = redis
     end

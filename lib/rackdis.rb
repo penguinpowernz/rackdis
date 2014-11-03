@@ -1,5 +1,7 @@
 require "redis"
 require "grape"
+require "rack/stream"
+require "redis/connection/synchrony"
 
 require "rackdis/version"
 require "rackdis/api"

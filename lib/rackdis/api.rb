@@ -1,10 +1,12 @@
 module Rackdis
   class API < Grape::API
-
+      
     version 'v1'
     format :json
 
     helpers do
+      include Rack::Stream::DSL
+      
       def redis
         @redis ||= RedisFacade.new(Redis.new)
       end
@@ -91,6 +93,18 @@ module Rackdis
       redis.publish(params[:channel], params[:message])
     end
     
+    get 'subscribe/:channel' do
+      after_open do
+        redis.redis.subscribe params[:channel] do |on|
+          on.message do |channel, msg|
+            chunk msg
+          end
+        end
+      end
+      
+      status 200
+      header 'Content-Type', 'application/json'
+      ""
+    end
   end
 end
-    
