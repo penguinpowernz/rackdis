@@ -3,24 +3,17 @@ module Rackdis
     def initialize(redis)
       @redis = redis
     end
-
-    def get(key)
-      value = @redis.get(key)
-      respond key, value
+    
+    def call(command, *args)
+      respond command.to_s.upcase!, args[0], @redis.send(command, *args)
     end
 
-    def set(key, value)
-      @redis.set(key, value)
-      respond key
     end
     end
 
     private
 
-    def respond(key, value=nil)
-      command = caller[0].split("`").pop.sub("'","")
-      command.upcase!
-      
+    def respond(command, key, value=nil)
       hash = {
         success: true,
         command: command,
