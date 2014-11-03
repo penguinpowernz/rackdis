@@ -6,17 +6,21 @@ module Rackdis
 
     def get(key)
       value = @redis.get(key)
-      respond :GET, key, value
+      respond key, value
     end
 
     def set(key, value)
       @redis.set(key, value)
-      respond :SET, key
+      respond key
+    end
     end
 
     private
 
-    def respond(command, key, value=nil)
+    def respond(key, value=nil)
+      command = caller[0].split("`").pop.sub("'","")
+      command.upcase!
+      
       hash = {
         success: true,
         command: command,
