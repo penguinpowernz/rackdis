@@ -3,4 +3,9 @@
 require 'rackdis'
 require 'rack'
 
-Rack::Server.new(app: Rackdis::API.new, Port: 7380).start
+app = Rack::Builder.new do
+  use Rack::Stream
+  run Rackdis::API.new
+end
+
+Rack::Handler::Thin.run(app, Port: 7380)
