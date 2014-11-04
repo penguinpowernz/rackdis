@@ -10,6 +10,22 @@ module Rackdis
       def redis
         @redis ||= RedisFacade.new(Redis.new)
       end
+      
+      def key
+        params[:key]
+      end
+      
+      def keys
+        params[:keys]
+      end
+      
+      def value
+        params[:value]
+      end
+      
+      def values
+        params[:values]
+      end
     end
 
     get 'get/:key' do
@@ -25,6 +41,65 @@ module Rackdis
     end
     
     # Lists
+    get 'lpush/:key/:value' do
+      redis.call :lpush, key, value
+    end
+    
+    get 'lpush/:key/*values' do
+      redis.call :lpush, key, values
+    end
+    
+    get 'lpushx/:key/:value' do
+      redis.call :lpushx, key, value
+    end
+    
+    get 'rpush/:key/:value' do
+      redis.call :rpush, key, value
+    end
+    
+    get 'rpush/:key/*values' do
+      redis.call :rpush, key, values
+    end
+    
+    get 'rpushx/:key/:value' do
+      redis.call :rpushx, key, value
+    end
+    
+    get 'llen/:key' do
+      redis.call :llen, key
+    end
+    
+    get 'lindex/:key/:index' do
+      redis.call :lindex, key, params[:index]
+    end
+    
+    get 'lrange/:key/:start/:stop' do
+      redis.call :lrange, key, params[:start], params[:stop]
+    end
+    
+    get 'lset/:key/:index/:value' do
+      redis.call :lset, key, params[:index], value
+    end
+    
+    get 'lrem/:key/:count/:value' do
+      redis.call :lrem, key, params[:count], value
+    end
+    
+    get 'linsert/:key/:where/:pivot/:value' do
+      redis.call :linsert, key, params[:where], params[:pivot], value
+    end
+    
+    get 'lpop/:key' do
+      redis.call :lpop, key
+    end
+    
+    get 'rpop/:key' do
+      redis.call :rpop, key
+    end
+    
+    get 'rpoplpush/:src/:dst' do
+      redis.call :rpoplpush, params[:src], params[:dst]
+    end
     
     # Sets
     get 'sadd/:key/*members' do
