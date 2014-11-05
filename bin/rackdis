@@ -16,13 +16,12 @@ end
 # Show any errors with the given options
 begin
   opts.parse
-rescue Slop::Error => e
+  config = Rackdis::Config.new(opts)
+rescue Slop::Error, ArgumentError => e
   puts "ERROR: #{e.message}"
   puts opts
   abort
 end
-
-config = Rackdis::Config.new(opts)
 
 app = Rack::Builder.new do
   use Rack::Stream
