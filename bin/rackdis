@@ -2,6 +2,25 @@
 
 require 'rackdis'
 require 'rack'
+require 'slop'
+
+opts = Slop.new help: true, strict: true, indent: 2 do
+  banner "Usage: rackdis [options]"
+  
+  on :c, :config=, "Config file"
+  on :p, :port=, "Port to bind to"
+  on :a, :address=, "Address to bind to"
+  on :d, :daemonize, "Daemonize"
+end
+
+# Show any errors with the given options
+begin
+  opts.parse
+rescue Slop::Error => e
+  puts "ERROR: #{e.message}"
+  puts opts
+  abort
+end
 
 app = Rack::Builder.new do
   use Rack::Stream
