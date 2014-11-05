@@ -7,10 +7,10 @@ require 'slop'
 opts = Slop.new help: true, strict: true, indent: 2 do
   banner "Usage: rackdis [options]"
   
-  on :c, :config=, "Config file"
-  on :p, :port=, "Port to bind to"
-  on :a, :address=, "Address to bind to"
-  on :d, :daemonize, "Daemonize"
+  on :c, :config=,   "Config file to load options from"
+  on :p, :port=,     "Port to bind to"
+  on :a, :address=,  "Address to bind to"
+  on :d, :daemonize, "Put rackdis in the background"
 end
 
 # Show any errors with the given options
