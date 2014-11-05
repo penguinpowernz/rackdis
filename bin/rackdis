@@ -22,9 +22,11 @@ rescue Slop::Error => e
   abort
 end
 
+config = Rackdis::Config.new(opts)
+
 app = Rack::Builder.new do
   use Rack::Stream
   run Rackdis::API.new
 end
 
-Rack::Handler::Thin.run(app, Port: 7380)
+Rack::Handler::Thin.run(app, config.rack_options)
