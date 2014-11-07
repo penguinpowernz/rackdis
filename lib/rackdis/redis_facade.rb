@@ -20,6 +20,39 @@ module Rackdis
       
       return Rackdis::ResponseBuilder.new(command).process(args, result)
     end
+    
+    def batch(commands)
+      raise ArgumentError, "Batching is disabled" unless @config[:allow_batching]
+      
+      # Try to extract individual commands
+      begin
+        commands = JSON.parse(commands)
+      rescue JSON::ParserError
+        raise ArgumentError, "Invalid batch commands" unless commands.is_a? String
+        commands = commands.split("\n")
+      end
+      
+      raise ArgumentError, "Invalid batch commands" unless commands.is_a? Array
+      
+      # Check each command and their arguments
+      calls = []
+      commands.each do |line|
+        args   = line.split(" ")
+        cmd    = args.shift.downcase.to_sym
+        
+        # bail out if any of the commands or args are bad
+        valid_command!(cmd)
+        args   = Rackdis::ArgumentParser.new(cmd).process(args)
+        
+        calls << [cmd, args]
+      end
+      
+      # Everything passed to run all the commands now
+      calls.collect do |call|
+        result = @redis.send(*call)
+        Rackdis::ResponseBuilder.new(cmd).process(args, result)
+      end
+    end
 
     # Pub/Sub
     

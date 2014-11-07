@@ -47,6 +47,10 @@ module Rackdis
       do_subscribe
     end
 
+    post 'batch' do
+      redis.batch params[:commands]
+    end
+
     get ':command/*args' do
       redis.call params[:command], args
     end

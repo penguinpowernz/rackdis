@@ -3,14 +3,15 @@ module Rackdis
     
     def self.defaults
       {
-        port:         7380,
-        address:      "0.0.0.0",
-        daemonize:    false,
-        log:          STDOUT,
-        log_level:    "info",
-        db:           0,
-        allow_unsafe: false,
-        force_enable: []
+        port:           7380,
+        address:        "0.0.0.0",
+        daemonize:      false,
+        log:            STDOUT,
+        log_level:      "info",
+        db:             0,
+        allow_unsafe:   false,
+        force_enable:   [],
+        allow_batching: false
       }
     end
     

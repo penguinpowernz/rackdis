@@ -16,6 +16,7 @@ opts = Slop.new help: true, strict: true, indent: 2 do
   on :db=,                      "The redis db to use"
   on :allow_unsafe,             "Enable unsafe commands"
   on :force_enable=, as: Array, "Force enabling some redis commands (DANGER)"
+  on :allow_batching,           "Allows batching of commands through a POST request"
 end
 
 # Show any errors with the given options

@@ -1,9 +1,10 @@
 ---
-:port:         9342
-:address:      127.0.0.1
-:daemonize:    false
-:db:           0
-:log:          /dev/null
-:log_level:    shutup
-:allow_unsafe: false
+:port:           9342
+:address:        127.0.0.1
+:daemonize:      false
+:db:             0
+:log:            /dev/null
+:log_level:      shutup
+:allow_unsafe:   false
 :force_enable:
+:allow_batching: false
