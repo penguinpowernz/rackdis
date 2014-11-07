@@ -11,6 +11,8 @@ opts = Slop.new help: true, strict: true, indent: 2 do
   on :p, :port=,     "Port to bind to"
   on :a, :address=,  "Address to bind to"
   on :d, :daemonize, "Put rackdis in the background"
+  on :log_level=,    "Log level"
+  on :l, :log=,      "Log location (- for stdout)"
   on :db=,           "The redis db to use"
 end
 

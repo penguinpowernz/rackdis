@@ -1,26 +1,23 @@
 module Rackdis
   class Config
-
-    DEFAULTS = {
-      port: 7380,
-      address: "0.0.0.0",
-      daemonize: false
-    }
     
-    def initialize(opts)
-      @config = DEFAULTS.clone
-      process_options opts
-    end
-
-    def rack_options
+    def self.defaults
       {
-        Port: @config[:port],
-        Host: @config[:address],
-        daemonize: @config[:daemonize]
+        port: 7380,
+        address: "0.0.0.0",
+        daemonize: false,
+        log: STDOUT,
+        log_level: "error",
+        db: 0
       }
     end
     
+    def initialize(opts)
+      @config = Config.defaults
       process_options opts
+      post_process
+    end
+
     def [](key)
       @config[key]
     end
@@ -45,6 +42,21 @@ module Rackdis
       return false if file.nil?
       raise ArgumentError, "Invalid config file: #{file}" unless File.exist? file
       @config.merge!(YAML.load_file(file))
+    end
+
+    def post_process
+      @config[:log] = case @config[:log]
+      when nil, "", " ", "no", "none"
+        "/dev/null"
+      when "stdout", "-", "STDOUT"
+        STDOUT
+      when "stderr", "STDERR"
+        STDERR
+      else
+        @config[:log]
+      end
+      
+      @config[:log] = "/dev/null" if @config[:log_level] == "shutup"
     end
 
   end

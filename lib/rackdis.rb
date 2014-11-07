@@ -1,3 +1,5 @@
+require "logger"
+require "yaml"
 require "redis"
 require "grape"
 require "yaml"
@@ -35,6 +37,33 @@ module Rackdis
     
     def redis_client
       Redis.new redis_options
+    end
+    
+    def logger
+      @logger ||= create_logger
+    end
+    
+    def create_logger
+      logger = Logger.new @config[:log] || STDOUT
+      
+      if @config
+        logger.level = case @config[:log_level]
+        when "debug"
+          Logger::DEBUG
+        when "info"
+          Logger::INFO
+        when "error"
+          Logger::ERROR
+        when "warn"
+          Logger::WARN
+        else
+          Logger::UNKNOWN # shutup!
+        end
+      else
+        logger.log_level = Logger::UNKNOWN
+      end
+      
+      logger
     end
   end
 end

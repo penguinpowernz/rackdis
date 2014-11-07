@@ -3,3 +3,5 @@
 :address: 127.0.0.1
 :daemonize: false
 :db: 0
+:log: /dev/null
+:log_level: shutup
