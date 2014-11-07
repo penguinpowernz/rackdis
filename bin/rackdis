@@ -14,6 +14,7 @@ opts = Slop.new help: true, strict: true, indent: 2 do
   on :log_level=,    "Log level"
   on :l, :log=,      "Log location (- for stdout)"
   on :db=,           "The redis db to use"
+  on :unsafe,        "Enable unsafe commands"
 end
 
 # Show any errors with the given options

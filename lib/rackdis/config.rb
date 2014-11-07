@@ -8,7 +8,8 @@ module Rackdis
         daemonize: false,
         log: STDOUT,
         log_level: "error",
-        db: 0
+        db: 0,
+        unsafe: false
       }
     end
     

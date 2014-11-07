@@ -39,6 +39,10 @@ module Rackdis
     def redis_client
       Redis.new redis_options
     end
+
+    def allow_unsafe_commands?
+      @config[:unsafe] || false
+    end
     
     def logger
       @logger ||= create_logger

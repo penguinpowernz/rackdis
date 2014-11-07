@@ -34,7 +34,8 @@ module Rackdis
     end
     
     def valid_command?(cmd)
-      safe_commands.include? cmd
+      safe_commands.include?(cmd) or
+      Rackdis.allow_unsafe_commands? and unsafe_commands.include?(cmd)
     end
     
     def safe_commands
@@ -51,6 +52,16 @@ module Rackdis
         :hlen, :hset, :hsetnx, :hmset, :hget, :hmget, :hdel, :hexists, :hincrby, :hincrbyfloat, :hkeys, :hvals, :hgetall, :hscan,
         :publish,
         :pfadd, :pfcount, :pfmerge
+      ]
+    end
+    
+    def unsafe_commands
+      [
+        :auth, :info, :slowlog,
+        :bgrewriteaof, :bgsave, :lastsave, :save,
+        :config, :flushall, :flushdb,
+        :move, :migrate, :select, :slaveof,
+        :script, :eval, :evalsha
       ]
     end
 
