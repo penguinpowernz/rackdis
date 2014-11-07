@@ -8,6 +8,8 @@ require "rackdis/version"
 require "rackdis/api"
 require "rackdis/redis_facade"
 require "rackdis/config"
+require "rackdis/argument_parser"
+require "rackdis/response_builder"
 
 module Rackdis
   # Your code goes here...
