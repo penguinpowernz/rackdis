@@ -2,9 +2,10 @@ module Rackdis
   class RedisFacade
     attr_reader :redis
     
-    def initialize(redis, log)
-      @redis = redis
-      @log = log
+    def initialize(redis, config, log)
+      @redis  = redis
+      @config = config
+      @log    = log
     end
     
     def call(command, args)
@@ -35,7 +36,8 @@ module Rackdis
     
     def valid_command?(cmd)
       safe_commands.include?(cmd) or
-      Rackdis.allow_unsafe_commands? and unsafe_commands.include?(cmd)
+      (@config[:allow_unsafe] and unsafe_commands.include?(cmd)) or
+      (@config[:force_enable] and @config[:force_enable].include?(cmd))
     end
     
     def safe_commands

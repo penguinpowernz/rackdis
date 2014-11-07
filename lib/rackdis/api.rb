@@ -14,7 +14,7 @@ module Rackdis
       include Rack::Stream::DSL
       
       def redis
-        @redis ||= RedisFacade.new(Rackdis.redis_client, Rackdis.logger)
+        @redis ||= RedisFacade.new(Rackdis.redis_client, Rackdis.config, Rackdis.logger)
       end
       
       def do_subscribe
