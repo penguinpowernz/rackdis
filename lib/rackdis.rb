@@ -1,10 +1,11 @@
 require "logger"
 require "yaml"
+require "json"
 require "redis"
 require "grape"
-require "yaml"
-require "rack/stream"
 require "redis/connection/synchrony"
+require "rack/stream"
+require "rack/cors"
 
 require "rackdis/version"
 require "rackdis/api"

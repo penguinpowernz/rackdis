@@ -28,6 +28,12 @@ end
 
 app = Rack::Builder.new do
   use Rack::Stream
+  use Rack::Cors do
+    allow do
+      origins '*'
+      resource '*', headers: :any, methods: :get
+    end
+  end
   run Rackdis::API.new
 end
 
