@@ -32,6 +32,8 @@ module Rackdis
     
     def redis_options
       {
+        host: @config[:redis_host],
+        port: @config[:redis_port],
         db: @config[:db] || 0
       }
     end

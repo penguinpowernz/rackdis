@@ -11,7 +11,8 @@ module Rackdis
         db:             0,
         allow_unsafe:   false,
         force_enable:   [],
-        allow_batching: false
+        allow_batching: false,
+        redis:          "127.0.0.1:6379"
       }
     end
     
@@ -48,6 +49,11 @@ module Rackdis
     end
 
     def post_process
+      process_log
+      process_redis
+    end
+
+    def process_log
       @config[:log] = case @config[:log]
       when nil, "", " ", "no", "none"
         "/dev/null"
@@ -60,6 +66,22 @@ module Rackdis
       end
       
       @config[:log] = "/dev/null" if @config[:log_level] == "shutup"
+    end
+
+    def process_redis
+      if @config[:redis].include? ":"
+        parts = @config[:redis].split(":")
+        port = parts.last
+        host = parts.first
+      else
+        host = @config[:redis]
+      end
+      
+      host = "127.0.0.1" if host.nil? or host.empty?
+      port = 6379 if port.nil? or port.empty?
+      
+      @config[:redis_port] = port
+      @config[:redis_host] = host
     end
 
   end

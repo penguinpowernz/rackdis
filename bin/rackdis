@@ -7,6 +7,7 @@ require 'slop'
 opts = Slop.new help: true, strict: true, indent: 2 do
   banner "Usage: rackdis [options]"
   
+  on :r, :redis=,               "The redis server location"
   on :c, :config=,              "Config file to load options from"
   on :p, :port=,                "Port to bind to"
   on :a, :address=,             "Address to bind to"

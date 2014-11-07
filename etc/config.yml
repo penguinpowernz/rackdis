@@ -8,3 +8,4 @@
 :allow_unsafe:   false
 :force_enable:
 :allow_batching: false
+:redis:          "127.0.0.1:6379"
