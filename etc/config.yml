@@ -2,3 +2,4 @@
 :port: 9342
 :address: 127.0.0.1
 :daemonize: false
+:db: 0

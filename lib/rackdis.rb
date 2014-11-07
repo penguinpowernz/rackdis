@@ -26,5 +26,15 @@ module Rackdis
         daemonize: @config[:daemonize]
       }
     end
+    
+    def redis_options
+      {
+        db: @config[:db] || 0
+      }
+    end
+    
+    def redis_client
+      Redis.new redis_options
+    end
   end
 end
