@@ -1,6 +1,12 @@
 module Rackdis
   class API < Grape::API
       
+    
+    rescue_from :all do |e|
+      Rackdis.logger.error("#{e.class.name}: #{e.message}")
+      Rack::Response.new({ success: false, error: e.message }.to_json, 500)
+    end
+    
     version 'v1'
     format :json
 
