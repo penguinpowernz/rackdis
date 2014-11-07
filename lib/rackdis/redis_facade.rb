@@ -2,16 +2,19 @@ module Rackdis
   class RedisFacade
     attr_reader :redis
     
-    def initialize(redis)
+    def initialize(redis, log)
       @redis = redis
+      @log = log
     end
     
     def call(command, args)
       command.downcase!
       valid_command! command
       
+      @log.info("redis> #{command} #{args.join(' ')}")
       args = Rackdis::ArgumentParser.new(command).process(args)
       
+      @log.debug("API => REDIS: "+{command: command, args: args}.inspect)
       result = @redis.send(command, *args)
       
       return Rackdis::ResponseBuilder.new(command).process(args, result)
