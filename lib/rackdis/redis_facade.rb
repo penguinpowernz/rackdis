@@ -6,27 +6,16 @@ module Rackdis
       @redis = redis
     end
     
-    def call(command, *args)
-      respond command.to_s.upcase!, args[0], @redis.send(command, *args)
-    end
-
-    def mget(keys)
-      values = @redis.mget(keys)
+    def call(command, args)
+      command.downcase!
+      valid_command! command
       
-      pairs = {}
-      values.each_with_index do |value, i|
-        pairs[keys[i]] = value
-      end
+      args = Rackdis::ArgumentParser.new(command).process(args)
       
-      {
-        success: true,
-        command: :MGET,
-        keys: keys,
-        value: values,
-        pairs: pairs
-      }
+      result = @redis.send(command, *args)
+      
+      return Rackdis::ResponseBuilder.new(command).process(args, result)
     end
-    
 
     # Pub/Sub
     
@@ -36,6 +25,9 @@ module Rackdis
     end
 
     private
+    
+    def valid_command!(cmd)
+    end
 
     def respond(command, key, value=nil)
       hash = {
