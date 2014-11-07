@@ -20,6 +20,7 @@ module Rackdis
       }
     end
     
+      process_options opts
     def [](key)
       @config[key]
     end
@@ -34,10 +35,9 @@ module Rackdis
       # only if they are set because when they
       # are not set they are nil which ends up
       # wiping out all of the config
-      if opts.config?
-        merge_valid_opts(opts)
-      else
-        @config.merge!(opts)
+      opts.each do |key, value|
+        next if value.nil?
+        @config[key] = value
       end
     end
     
@@ -45,13 +45,6 @@ module Rackdis
       return false if file.nil?
       raise ArgumentError, "Invalid config file: #{file}" unless File.exist? file
       @config.merge!(YAML.load_file(file))
-    end
-
-    def merge_valid_opts(opts)
-      opts.to_hash.each do |key, value|
-        next if value.nil?
-        @config[key] = value
-      end
     end
 
   end
