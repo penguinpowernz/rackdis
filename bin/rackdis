@@ -15,8 +15,8 @@ end
 
 # Show any errors with the given options
 begin
-  opts.parse
-  config = Rackdis::Config.new(opts)
+  opts.parse!
+  Rackdis.configure(opts.to_hash)
 rescue Slop::Error, ArgumentError => e
   puts "ERROR: #{e.message}"
   puts opts
@@ -28,4 +28,4 @@ app = Rack::Builder.new do
   run Rackdis::API.new
 end
 
-Rack::Handler::Thin.run(app, config.rack_options)
+Rack::Handler::Thin.run(app, Rackdis.rack_options)

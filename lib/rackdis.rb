@@ -12,5 +12,19 @@ require "rackdis/argument_parser"
 require "rackdis/response_builder"
 
 module Rackdis
-  # Your code goes here...
+  class << self
+    attr_reader :config
+    
+    def configure(**opts)
+      @config = Rackdis::Config.new(opts)
+    end
+    
+    def rack_options
+      {
+        Port: @config[:port],
+        Host: @config[:address],
+        daemonize: @config[:daemonize]
+      }
+    end
+  end
 end

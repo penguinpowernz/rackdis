@@ -20,6 +20,10 @@ module Rackdis
       }
     end
     
+    def [](key)
+      @config[key]
+    end
+    
     private
     
     def process_options(opts)
