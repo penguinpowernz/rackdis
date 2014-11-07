@@ -7,17 +7,17 @@ require 'slop'
 opts = Slop.new help: true, strict: true, indent: 2 do
   banner "Usage: rackdis [options]"
   
-  on :r, :redis=,               "The redis server location"
-  on :c, :config=,              "Config file to load options from"
-  on :p, :port=,                "Port to bind to"
-  on :a, :address=,             "Address to bind to"
-  on :d, :daemonize,            "Put rackdis in the background"
-  on :log_level=,               "Log level"
-  on :l, :log=,                 "Log location (- for stdout)"
-  on :db=,                      "The redis db to use"
-  on :allow_unsafe,             "Enable unsafe commands"
-  on :force_enable=, as: Array, "Force enabling some redis commands (DANGER)"
-  on :allow_batching,           "Allows batching of commands through a POST request"
+  on :r, :redis=,     "The redis server location (127.0.0.1, :6379, 127.0.0.1:6379)"
+  on :c, :config=,    "Config file to load options from"
+  on :p, :port=,      "Port for rackdis to bind to"
+  on :a, :address=,   "Address for rackdis to bind to"
+  on :d, :daemonize,  "Put rackdis in the background"
+  on :log_level=,     "Log level (shutup, error, warn, debug, info)"
+  on :l, :log=,       "Log location (- or stdout for stdout, stderr)"
+  on :db=,            "The redis db to use (a number 0 through 16)"
+  on :allow_unsafe,   "Enable unsafe commands (things like flushdb) !CAREFUL!"
+  on :force_enable=,  "Comma separated list of commands to enable !CAREFUL!", as: Array
+  on :allow_batching, "Allows batching of commands through a POST request"
 end
 
 # Show any errors with the given options
