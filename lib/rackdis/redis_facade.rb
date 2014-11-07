@@ -16,7 +16,12 @@ module Rackdis
       args = Rackdis::ArgumentParser.new(command).process(args)
       
       @log.debug("API => REDIS: "+{command: command, args: args}.inspect)
-      result = @redis.send(command, *args)
+      
+      begin
+        result = @redis.send(command, *args)
+      rescue ArgumentError
+        raise NotImplementedError, "Oops sorry - too beta - this needs fixing.  A bug report at https://github.com/penguinpowernz/rackdis/issues would be nice :)"
+      end
       
       return Rackdis::ResponseBuilder.new(command).process(args, result)
     end
