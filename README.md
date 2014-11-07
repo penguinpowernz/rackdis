@@ -1,5 +1,7 @@
 # Rackdis
 
+![](http://i.imgur.com/CDKmIl1.png)
+
 A Ruby clone of the awesome [Webdis](http://webd.is) server, allowing HTTP access to a Redis server through an API.
 
 Webdis is awesome, but it hasn't had much action lately and there are lots of feature requests and bug reports that haven't been addressed.  I would love to contribute but I have no desire in learning C at this stage.  I also think Ruby is awesome so I wanted to try cloning Webdis in Ruby.  Most of the stuff is already written for me, so this project is mostly glue code:
