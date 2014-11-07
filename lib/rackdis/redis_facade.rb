@@ -65,15 +65,14 @@ module Rackdis
       ]
     end
 
-    def respond(command, key, value=nil)
-      hash = {
-        success: true,
-        command: command,
-        key: key
-      }
+    # TODO: investigate and support these
+    # def unsupported_commmands
+    #   [
+    #     :monitor,
+    #     :unsubscribe, :psubscribe, :punsubscribe,
+    #     :brpop, :blpop, :brpoplpush
+    #   ]
+    # end
 
-      hash[:value] = value if value
-      hash
-    end
   end
 end
