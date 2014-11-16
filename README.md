@@ -72,7 +72,7 @@ Usage: rackdis [options]
     -h, --help                Display this help message.
 ```
 
-All of these commands are optional.  The hard coded configuration has sane defaults.  Specifying a configuration file would override those defaults.  Specifying a command line options from above overrides everything.  Speaking of configuration files, here's what one looks like:
+All of these commands are optional.  The hard coded configuration has sane defaults.  Specifying a configuration file would override those defaults.  Specifying a command line options from above overrides everything.  Speaking of configuration files, here's what one looks like (with the aforementioned sane defaults specified):
 
 ```yml
 ---
