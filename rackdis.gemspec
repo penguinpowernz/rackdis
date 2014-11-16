@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "rack-stream"
   spec.add_dependency "em-synchrony"
   spec.add_dependency "slop"
-  spec.add_dependency "thin"
+  spec.add_dependency "thin", "~> 1.6.2"
   spec.add_dependency "rack-cors"
 
   spec.add_development_dependency "bundler", "~> 1.7"
