@@ -37,12 +37,10 @@ Most commands should work, there are a few left unsupported. However this code i
 
 ## Installation
 
-**Sorry I haven't actually pushed it to rubygems yet**
-
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'rackdis'
+gem 'rackdis', '~> 0.12.pre.beta'
 ```
 
 And then execute:
@@ -51,7 +49,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install rackdis
+    $ gem install rackdis --pre
 
 ## Usage
 
