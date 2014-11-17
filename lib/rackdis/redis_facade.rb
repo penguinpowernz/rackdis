@@ -10,6 +10,7 @@ module Rackdis
     
     def call(command, args)
       command.downcase!
+      command = command.to_sym
       valid_command! command
       
       @log.info("redis> #{command} #{args.join(' ')}")
