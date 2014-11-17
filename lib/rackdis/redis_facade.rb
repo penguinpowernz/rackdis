@@ -69,7 +69,7 @@ module Rackdis
     private
     
     def valid_command!(cmd)
-      raise ArgumentError, "Unsupported command: #{command}" unless valid_command?
+      raise ArgumentError, "Unsupported command: #{command}" unless valid_command?(cmd)
     end
     
     def valid_command?(cmd)
