@@ -1,17 +1,9 @@
 module Rackdis
   class API < Grape::API
       
-    
     rescue_from :all do |e|
       Rackdis.logger.error("#{e.class.name}: #{e.message}")
-      
-      # Print each line from the backtrace
-      if Rackdis.logger.debug?
-        e.backtrace.each do |line|
-          Rackdis.logger.debug(line)
-        end
-      end
-      
+      Rackdis.log_backtrace(e)     
       Rack::Response.new({ success: false, error: e.message }.to_json, 500)
     end
     

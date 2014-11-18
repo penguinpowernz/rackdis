@@ -72,5 +72,15 @@ module Rackdis
       
       logger
     end
+
+    # Print each line from the backtrace if log
+    # level is set to debug
+    def log_backtrace(error)
+      if Rackdis.logger.debug?
+        error.backtrace.each do |line|
+          Rackdis.logger.debug(line)
+        end
+      end
+    end
   end
 end
