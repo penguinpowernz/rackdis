@@ -18,11 +18,7 @@ module Rackdis
       
       @log.debug("API => REDIS: "+{command: command, args: args}.inspect)
       
-      begin
-        result = @redis.send(command, *args)
-      rescue ArgumentError
-        raise NotImplementedError, "Oops sorry - too beta - this needs fixing.  A bug report at https://github.com/penguinpowernz/rackdis/issues would be nice :)"
-      end
+      result = @redis.send(command, *args)
       
       return Rackdis::ResponseBuilder.new(command).process(args, result)
     end
