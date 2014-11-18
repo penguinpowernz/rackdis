@@ -1,3 +1,3 @@
 module Rackdis
-  VERSION = "0.12-beta"
+  VERSION = "0.13-beta"
 end
