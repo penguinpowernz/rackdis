@@ -19,18 +19,20 @@ module Rackdis
       
       def do_subscribe
         after_open do
-          Rackdis.logger.debug "Someone subscribed to #{params[:channel]}"
-          redis.redis.subscribe params[:channel] do |on|
+          channels = params[:channels].split("/")
+          Rackdis.logger.debug "Someone subscribed to #{channels}"
+          redis.redis.subscribe(channels) do |on|
             on.message do |channel, msg|
-              Rackdis.logger.debug "Pushing: #{msg}"
-              chunk msg
+              out = { channel: channel, message: msg }
+              Rackdis.logger.debug "Pushing: #{out}"
+              chunk out.to_json
             end
           end
         end
         
         status 200
         header 'Content-Type', 'application/json'
-        ""
+        return ""
       end
       
       def args
@@ -39,11 +41,11 @@ module Rackdis
     end
     
     # Subscribe
-    get 'subscribe/:channel' do
+    get 'subscribe/*channels' do
       do_subscribe
     end
     
-    get 'SUBSCRIBE/:channel' do
+    get 'SUBSCRIBE/*channels' do
       do_subscribe
     end
 
