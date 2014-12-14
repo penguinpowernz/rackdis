@@ -2,11 +2,10 @@ module Rackdis
   class API < Grape::API
       
     rescue_from :all do |e|
-      Rackdis.logger.error("#{e.class.name}: #{e.message}")
-      Rackdis.log_backtrace(e)     
-      Rack::Response.new({ success: false, error: e.message }.to_json, 500)
+      error = process_error(e)
+      Rack::Response.new({ success: false, error: error.message }.to_json, error.code)
     end
-    
+
     version 'v1'
     format :json
 
@@ -35,6 +34,23 @@ module Rackdis
       
       def args
         params[:args].split("/")
+      end
+
+      def process_error(e)
+        Rackdis.logger.e("#{e.class.name}: #{e.message}")
+        Rackdis.log_backtrace(e)
+
+        error = {
+          code: 500,
+          message: e.message
+        }
+
+        case e
+        when Redis::CommandError
+          error.code = 400
+        end
+
+        error
       end
     end
     
