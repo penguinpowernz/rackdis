@@ -18,6 +18,7 @@ module Rackdis
       
       def do_subscribe
         after_open do
+          @timer = EM.add_periodic_timer(10) { chunk "" }
           Rackdis.logger.debug "Someone subscribed to #{params[:channel]}"
           redis.redis.subscribe params[:channel] do |on|
             on.message do |channel, msg|
@@ -27,6 +28,10 @@ module Rackdis
           end
         end
         
+        before_close do
+          @timer.cancel
+        end
+
         status 200
         header 'Content-Type', 'application/json'
         ""
