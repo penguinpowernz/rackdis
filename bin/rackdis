@@ -41,4 +41,6 @@ app = Rack::Builder.new do
   run Rackdis::API.new
 end
 
+Faye::WebSocket.load_adapter('thin')
+
 Rack::Handler::Thin.run(app, Rackdis.rack_options)
