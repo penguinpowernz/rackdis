@@ -4,6 +4,9 @@ module Rackdis
       @command = command.to_sym
     end
     
+    # The point of this method is to turn the given args, coming from
+    # the api path, into an array that can be splatted straight into
+    # the redis method for the given command.
     def process(args)
       case @command
       when :lpush, :rpush, :sadd, :srem, :sunionstore, :sinterstore, :sdiffstore
