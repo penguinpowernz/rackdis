@@ -11,15 +11,13 @@ module Rackdis
     def call(command, args)
       command.downcase!
       command = command.to_sym
-      valid_command! command
       
       @log.info("redis> #{command} #{args.join(' ')}")
-      args = Rackdis::ArgumentParser.new(command).process(args)
-      
       @log.debug("API => REDIS: "+{command: command, args: args}.inspect)
-      
-      result = @redis.send(command, *args)
-      
+
+      valid_command! command
+      result = @redis.client.call([command, *args])
+
       return Rackdis::ResponseBuilder.new(command).process(args, result)
     end
     
